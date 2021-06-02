@@ -1,0 +1,29 @@
+h1 {
+  margin: 10px;
+  padding: 5px;
+  color: green;
+  text-align: center;
+  text-decoration: underline;
+  text-transform: uppercase;
+  text-indent: 100px;
+  letter-spacing: 5px;
+  text-shadow: 2px -12px 12px red;
+  line-height: 50px;
+  font-style: italic;
+  font-family: 'Baloo Bhai 2', cursive;
+}
+
+.my-button {
+  padding: 10px 15px;
+  text-align: center;
+  border: none;
+  background-color: rgb(139, 41, 139);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.my-button:hover {
+  background-color: rgb(71, 20, 71);
+  transition: 1s;
+}

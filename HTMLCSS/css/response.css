@@ -1,0 +1,24 @@
+body {
+  background-color: white;
+  text-align: center;
+}
+
+.section {
+  padding: 100px 10%;
+}
+
+.heading {
+  color: green;
+  font-size: 50px;
+}
+
+.para {
+  color: gray;
+  font-size: 25px;
+}
+
+@media screen and (max-width: 700px) {
+  .heading {
+    font-size: 30px;
+  }
+}

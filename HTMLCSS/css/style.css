@@ -1,0 +1,41 @@
+p {
+  text-align: center;
+}
+
+#myId {
+  color: green;
+}
+
+h5.my-class {
+  text-align: right;
+  color: yellow;
+}
+
+* {
+  font-size: 50px;
+}
+
+a:hover {
+  color: rgb(117, 50, 50);
+  transition: 1s;
+}
+
+.my-div {
+  /* background-image: url("../images/test.jpg");
+  background-color: green;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 200vh;
+  background-position: bottom; */
+  background: green url("../images/test.jpg") no-repeat fixed bottom ;
+  height: 200vh;
+}
+
+/* element-selector */
+/* id selector */
+/* class selector */
+/* combination selectors */
+/* universal selectors */
+/* pseudo class selectors */
+
+/* colors ->  HEX, RGBA, HSL */
