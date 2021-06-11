@@ -1,8 +1,7 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const app = express();
-
-const User = require("./models/User");
+const mongoose = require("mongoose");
+const userRoute = require("./routes/UserRoute");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -19,22 +18,7 @@ mongoose
     console.error("MongoDB connection failed.");
   });
 
-app.post("/signup", (req, res) => {
-  let { firstName, lastName, email, password } = req.body;
-  let user = new User({
-    firstName,
-    lastName,
-    email,
-    password,
-  });
-  user
-    .save()
-    .then(() => res.status(200).send(user))
-    .catch((error) => {
-      console.error(error);
-      return res.status(500).send("ERROR");
-    });
-});
+app.use(userRoute);
 
 const PORT = 7000;
 
