@@ -37,4 +37,24 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.put("/update/:email", (req, res) => {
+  let { email, password, firstName, lastName } = req.body;
+  let emailParam = req.params.email;
+  User.updateOne(
+    { email: emailParam },
+    { $set: { email, password, firstName, lastName } }
+  )
+    .then(() => {
+      console.info("Update successful");
+      return res.status(200).send({ email, password, firstName, lastName });
+    })
+    .catch((error) => {
+      console.error("There was an error while updating!");
+      return res.status(500).send("There was an error while updating the user");
+    });
+});
+
 module.exports = router;
+
+
+// UPDATE user SET firstName = "Shantanu abc" WHERE email LIKE shantanu@email.com
