@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("../models/User");
 const router = express();
+const mongoose = require("mongoose");
 
 router.post("/signup", (req, res) => {
   let { firstName, lastName, email, password } = req.body;
@@ -37,11 +38,30 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.put("/update/:email", (req, res) => {
+router.get("/:id", (req, res) => {
+  let id = req.params.id;
+  id = mongoose.Types.ObjectId(id);
+  User.findOne({ _id: id })
+    .then((user) => {
+      if (user) {
+        console.info("User found");
+        return res.status(200).send(user);
+      }
+      console.error("User was not found!");
+      return res.status(404).send("NOT FOUND");
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).send("ERROR");
+    });
+});
+
+router.put("/update/:id", (req, res) => {
   let { email, password, firstName, lastName } = req.body;
-  let emailParam = req.params.email;
+  let id = req.params.id;
+  id = mongoose.Types.ObjectId(id);
   User.updateOne(
-    { email: emailParam },
+    { _id: id },
     { $set: { email, password, firstName, lastName } }
   )
     .then(() => {
@@ -55,6 +75,5 @@ router.put("/update/:email", (req, res) => {
 });
 
 module.exports = router;
-
 
 // UPDATE user SET firstName = "Shantanu abc" WHERE email LIKE shantanu@email.com
