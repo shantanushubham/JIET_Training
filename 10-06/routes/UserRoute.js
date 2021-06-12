@@ -38,7 +38,7 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/user/:id", (req, res) => {
   let id = req.params.id;
   id = mongoose.Types.ObjectId(id);
   User.findOne({ _id: id })
@@ -71,6 +71,24 @@ router.put("/update/:id", (req, res) => {
     .catch((error) => {
       console.error("There was an error while updating!");
       return res.status(500).send("There was an error while updating the user");
+    });
+});
+
+router.get("/get-user", (req, res) => {
+  let { firstName, lastName } = req.query;
+  User.find({ firstName: firstName, lastName: lastName })
+    .then((userArray) => {
+      if (userArray.length === 0) {
+        console.error(
+          `No user were found with first name: ${firstName} & last name: ${lastName}`
+        );
+        return res.status(404).send("No user found");
+      }
+      return res.status(200).send(userArray);
+    })
+    .catch((error) => {
+      console.error("Error occurred", error);
+      return res.status(500).send("ERROR");
     });
 });
 
