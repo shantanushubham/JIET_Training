@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/User");
 const router = express();
 const mongoose = require("mongoose");
+const userController = require("../controller/UserController");
 
 router.post("/signup", (req, res) => {
   let { firstName, lastName, email, password } = req.body;
@@ -56,23 +57,7 @@ router.get("/user/:id", (req, res) => {
     });
 });
 
-router.put("/update/:id", (req, res) => {
-  let { email, password, firstName, lastName } = req.body;
-  let id = req.params.id;
-  id = mongoose.Types.ObjectId(id);
-  User.updateOne(
-    { _id: id },
-    { $set: { email, password, firstName, lastName } }
-  )
-    .then(() => {
-      console.info("Update successful");
-      return res.status(200).send({ email, password, firstName, lastName });
-    })
-    .catch((error) => {
-      console.error("There was an error while updating!");
-      return res.status(500).send("There was an error while updating the user");
-    });
-});
+router.put("/update/:id", userController.findUserByFirstNameAndLastName);
 
 router.get("/get-user", (req, res) => {
   let { firstName, lastName } = req.query;
