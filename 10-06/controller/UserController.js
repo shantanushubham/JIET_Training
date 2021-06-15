@@ -64,20 +64,24 @@ exports.getUserById = (req, res) => {
     });
 };
 
-exports.findUserByFirstNameAndLastName = (req, res) => {
-  let { firstName, lastName } = req.query;
-  User.find({ firstName: firstName, lastName: lastName })
-    .then((userArray) => {
-      if (userArray.length === 0) {
-        console.error(
-          `No user were found with first name: ${firstName} & last name: ${lastName}`
-        );
-        return res.status(404).send("No user found");
+exports.updateUser = (req, res) => {
+  let id = mongoose.Types.ObjectId(req.params.id);
+  let { firstName, lastName } = req.body;
+  User.updateOne({ _id: id }, { $set: { firstName, lastName } })
+    .then((updateResult) => {
+      if (
+        updateResult.nModified >= 0 &&
+        updateResult.n >= 1 &&
+        updateResult.ok >= 1
+      ) {
+        console.info("User was successfully updated.");
+        return res.status(200).send("User was successfully updated.");
       }
-      return res.status(200).send(userArray);
+      console.error(`User with ID: ${id} doesn't exist!`);
+      return res.status(404).send(`User with ID: ${id} doesn't exist!`);
     })
     .catch((error) => {
-      console.error("Error occurred", error);
+      console.error("There was an error while updating user.", error);
       return res.status(500).send("ERROR");
     });
 };

@@ -9,7 +9,7 @@ router.post("/login", userController.login);
 
 router.get("/user/:id", userController.getUserById);
 
-router.put("/update/:id", userController.findUserByFirstNameAndLastName);
+router.put("/update/:id", tokenMiddleware.isTokenValid, userController.updateUser);
 
 router.get("/token", tokenMiddleware.isTokenValid, userController.isValid);
 
