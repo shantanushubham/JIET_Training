@@ -1,5 +1,3 @@
-const express = require("express");
-const router = express();
 const JWT = require("jsonwebtoken");
 
 exports.isTokenValid = (req, res, next) => {
