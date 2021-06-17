@@ -5,7 +5,7 @@ import {
   Route,
   Switch,
 } from "react-router-dom";
-import Test from "./Components/Test";
+import SignUp from "./Components/SignUp";
 
 class App extends React.Component {
   render() {
@@ -21,20 +21,12 @@ class App extends React.Component {
               <h1>This is Login</h1>
             </Route>
             <Route path={"/signup"}>
-              <h1>This is SignUp</h1>
-              <img
-                src={
-                  "https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg"
-                }
-              />
+              <SignUp />
             </Route>
             <Route path={"/about-us"}>This is about us</Route>
             <Route path={"/contact-us"}>This is contact us</Route>
             <Route path={"/404"}>
               <h1>Page not found</h1>
-            </Route>
-            <Route path={"/test"}>
-              <Test />
             </Route>
             <Route path={"/**"}>
               <Redirect to={"/404"} />
