@@ -12,7 +12,10 @@ exports.signUp = (req, res) => {
   });
   user
     .save()
-    .then(() => res.status(200).send(user))
+    .then(() => {
+      const token = getToken(user);
+      return res.status(200).send({ user, token });
+    })
     .catch((error) => {
       console.error(error);
       return res.status(500).send("ERROR");
@@ -25,15 +28,7 @@ exports.login = (req, res) => {
     .then((user) => {
       console.info(`User with email: ${email} was successfully found`);
       if (password === user.password) {
-        const token = JWT.sign(
-          {
-            email: user.email,
-          },
-          "JIETSecretKey",
-          {
-            expiresIn: "1h",
-          }
-        );
+        const token = getToken(user);
         console.info("Login successful");
         return res.status(200).send({ user, token });
       }
@@ -88,4 +83,16 @@ exports.updateUser = (req, res) => {
 
 exports.isValid = (req, res) => {
   return res.status(200).send("Token valid");
+};
+
+const getToken = (user) => {
+  return JWT.sign(
+    {
+      email: user.email,
+    },
+    "JIETSecretKey",
+    {
+      expiresIn: "1h",
+    }
+  );
 };

@@ -1,21 +1,24 @@
 import React from "react";
-import "../css/auth.css";
 import Axios from "axios";
 
-class SignUp extends React.Component {
-  state = { user: {} };
+class Login extends React.Component {
+  state = {
+    credentials: {},
+  };
 
   onSubmitClick = async (event) => {
     event.preventDefault();
-    console.log(this.state.user);
-    await Axios.post("http://localhost:7000/signup", this.state.user)
+    await Axios.post("http://localhost:7000/login", this.state.credentials)
       .then(({ data }) => {
-        localStorage.setItem("user", JSON.stringify(data));
         console.info(data);
+        localStorage.setItem("user", JSON.stringify(data));
         this.props.setUserState(data.user);
       })
       .catch((error) => {
         console.error(error);
+      })
+      .finally(() => {
+        console.info("Login API call finished.");
       });
   };
 
@@ -23,46 +26,18 @@ class SignUp extends React.Component {
     return (
       <div className={"section"}>
         <form className={"ui form"}>
-          <h4 className={"ui dividing header"}>SignUp</h4>
+          <h4 className={"ui dividing header"}>Login</h4>
           <div className={"field"}>
-            <label>First Name</label>
+            <label>Email</label>
             <div className={"two-fields"}>
-              <div className={"field"}>
-                <input
-                  type={"text"}
-                  placeholder={"First Name *"}
-                  onChange={(e) => {
-                    this.setState({
-                      user: {
-                        ...this.state.user,
-                        firstName: e.target.value,
-                      },
-                    });
-                  }}
-                />
-              </div>
-              <div className={"field"}>
-                <input
-                  type={"text"}
-                  placeholder={"Last Name *"}
-                  onChange={(e) => {
-                    this.setState({
-                      user: {
-                        ...this.state.user,
-                        lastName: e.target.value,
-                      },
-                    });
-                  }}
-                />
-              </div>
               <div className={"field"}>
                 <input
                   type={"email"}
                   placeholder={"Email *"}
                   onChange={(e) => {
                     this.setState({
-                      user: {
-                        ...this.state.user,
+                      credentials: {
+                        ...this.state.credentials,
                         email: e.target.value,
                       },
                     });
@@ -75,8 +50,8 @@ class SignUp extends React.Component {
                   placeholder={"Password *"}
                   onChange={(e) => {
                     this.setState({
-                      user: {
-                        ...this.state.user,
+                      credentials: {
+                        ...this.state.credentials,
                         password: e.target.value,
                       },
                     });
@@ -94,4 +69,4 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+export default Login;
