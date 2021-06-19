@@ -32,10 +32,7 @@ class App extends React.Component {
           {/* <h1>This Navbar</h1> */}
           <Switch>
             <Route path={"/"} exact>
-              <Homepage
-                firstName={this.state.user.firstName}
-                lastName={this.state.user.lastName}
-              />
+              <Homepage user={this.state.user} />
             </Route>
             <Route path={"/login"}>
               <Login setUserState={this.setUserState} />

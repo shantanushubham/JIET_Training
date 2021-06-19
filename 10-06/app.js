@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const userRoute = require("./routes/UserRoute");
 const cors = require("cors");
+const taskRoute = require("./routes/TaskRoute");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -21,6 +22,7 @@ mongoose
   });
 
 app.use(userRoute);
+app.use("/task", taskRoute);
 
 const PORT = 7000;
 
