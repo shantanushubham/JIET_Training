@@ -1,7 +1,8 @@
 import React from "react";
 import Axios from "axios";
-
+import { withRouter } from "react-router-dom";
 class Login extends React.Component {
+
   state = {
     credentials: {},
   };
@@ -13,6 +14,7 @@ class Login extends React.Component {
         console.info(data);
         localStorage.setItem("user", JSON.stringify(data));
         this.props.setUserState(data.user);
+        this.props.history.push("/")
       })
       .catch((error) => {
         console.error(error);
@@ -22,7 +24,10 @@ class Login extends React.Component {
       });
   };
 
+
   render() {
+    
+
     return (
       <div className={"section"}>
         <form className={"ui form"}>
@@ -69,4 +74,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

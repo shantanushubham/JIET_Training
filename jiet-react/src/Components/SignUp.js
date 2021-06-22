@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/auth.css";
 import Axios from "axios";
+import { withRouter } from "react-router-dom";
 
 class SignUp extends React.Component {
   state = { user: {} };
@@ -13,6 +14,7 @@ class SignUp extends React.Component {
         localStorage.setItem("user", JSON.stringify(data));
         console.info(data);
         this.props.setUserState(data.user);
+        this.props.history.push("/");
       })
       .catch((error) => {
         console.error(error);
@@ -94,4 +96,4 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+export default withRouter(SignUp);
