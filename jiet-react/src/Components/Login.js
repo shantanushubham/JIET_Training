@@ -1,20 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Axios from "axios";
-import { withRouter } from "react-router-dom";
-class Login extends React.Component {
+import { useHistory } from "react-router-dom";
 
-  state = {
-    credentials: {},
-  };
+const Login = (props) => {
+  const { setUserState } = props;
+  const history = useHistory();
+  const [credentials, setCredentials] = useState({});
 
-  onSubmitClick = async (event) => {
+  const onSubmitClick = async (event) => {
     event.preventDefault();
-    await Axios.post("http://localhost:7000/login", this.state.credentials)
+    await Axios.post("http://localhost:7000/login", credentials)
       .then(({ data }) => {
         console.info(data);
         localStorage.setItem("user", JSON.stringify(data));
-        this.props.setUserState(data.user);
-        this.props.history.push("/")
+        setUserState(data.user);
+        history.push("/");
       })
       .catch((error) => {
         console.error(error);
@@ -24,54 +24,45 @@ class Login extends React.Component {
       });
   };
 
-
-  render() {
-    
-
-    return (
-      <div className={"section"}>
-        <form className={"ui form"}>
-          <h4 className={"ui dividing header"}>Login</h4>
-          <div className={"field"}>
-            <label>Email</label>
-            <div className={"two-fields"}>
-              <div className={"field"}>
-                <input
-                  type={"email"}
-                  placeholder={"Email *"}
-                  onChange={(e) => {
-                    this.setState({
-                      credentials: {
-                        ...this.state.credentials,
-                        email: e.target.value,
-                      },
-                    });
-                  }}
-                />
-              </div>
-              <div className={"field"}>
-                <input
-                  type={"password"}
-                  placeholder={"Password *"}
-                  onChange={(e) => {
-                    this.setState({
-                      credentials: {
-                        ...this.state.credentials,
-                        password: e.target.value,
-                      },
-                    });
-                  }}
-                />
-              </div>
+  return (
+    <div className={"section"}>
+      <form className={"ui form"}>
+        <h4 className={"ui dividing header"}>Login</h4>
+        <div className={"field"}>
+          <label>Email</label>
+          <div className={"two-fields"}>
+            <div className={"field"}>
+              <input
+                type={"email"}
+                placeholder={"Email *"}
+                onChange={(e) => {
+                  setCredentials({
+                    ...credentials,
+                    email: e.target.value,
+                  });
+                }}
+              />
+            </div>
+            <div className={"field"}>
+              <input
+                type={"password"}
+                placeholder={"Password *"}
+                onChange={(e) => {
+                  setCredentials({
+                    ...credentials,
+                    password: e.target.value,
+                  });
+                }}
+              />
             </div>
           </div>
-          <button className={"ui primary button"} onClick={this.onSubmitClick}>
-            Submit
-          </button>
-        </form>
-      </div>
-    );
-  }
-}
+        </div>
+        <button className={"ui primary button"} onClick={onSubmitClick}>
+          Submit
+        </button>
+      </form>
+    </div>
+  );
+};
 
-export default withRouter(Login);
+export default Login;
