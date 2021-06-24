@@ -8,4 +8,6 @@ router.get("/:id", taskController.getTaskById);
 
 router.get("/user/:userId", taskController.getTasksByUserId);
 
+router.get("/pdf/:userId", taskController.generateTaskPDF);
+
 module.exports = router;
